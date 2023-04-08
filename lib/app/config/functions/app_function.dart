@@ -9,7 +9,7 @@ class AppFunction {
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        systemNavigationBarColor: AppTheme.main_color_1,
+        systemNavigationBarColor: AppTheme.transparent_color,
         systemNavigationBarDividerColor: AppTheme.main_color_1,
         systemNavigationBarIconBrightness: Brightness.light,
         statusBarColor: AppTheme.transparent_color,

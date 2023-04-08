@@ -13,12 +13,6 @@ class AppTheme {
 
   /// TODO : Main colors
   static const Color main_color_1 = Color.fromARGB(255, 37, 76, 149);
-  // static const Color main_color_1 = Color(0xFF0450BC);
-  static const Color main_color_2 = Color(0xFFEA1A1A);
-  static const Color main_color_3 = Color(0xFFFCEA00);
-  static const Color main_color_4 = Color(0xff93a5cb);
-  static const Color main_color_5 = Color.fromARGB(255, 232, 237, 245);
-  static const Color main_color_6 = Color.fromARGB(255, 114, 132, 197);
 
   /// TODO : Backs
   static const Color back_color_1 = Color(0xFF252525);
@@ -44,9 +38,9 @@ class AppTheme {
       appBarTheme: const AppBarTheme(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: back_color_2,
+        backgroundColor: main_color_1,
         titleTextStyle: TextStyle(
-          color: AppTheme.text_color_1,
+          color: AppTheme.text_color_2,
           fontWeight: FontWeight.bold,
           letterSpacing: .5,
           fontSize: 20,

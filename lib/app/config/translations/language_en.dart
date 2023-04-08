@@ -3,5 +3,7 @@
 import "app_translation.dart";
 
 final Map<String, String> language_en = <String, String>{
-  AppKeys.app_title.name: "ELECTRO BOUSFIHA",
+  AppKeys.app_title.name: "World News",
+  AppKeys.labelSearch.name: "Search...",
+  AppKeys.labelNoNews.name: "No News Found",
 };

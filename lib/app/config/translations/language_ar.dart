@@ -3,5 +3,5 @@
 import "app_translation.dart";
 
 final Map<String, String> language_ar = <String, String>{
-  AppKeys.app_title.name: "إلكترو بوصفيحة",
+  AppKeys.app_title.name: "اخبار العالم",
 };
