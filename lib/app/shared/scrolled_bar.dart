@@ -11,8 +11,6 @@ class ScrolledBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scrollbar(
       controller: controller,
-      // thumbVisibility: true,
-      // trackVisibility: true,
       thickness: 5,
       radius: const Radius.circular(AppConstant.radius),
       interactive: true,

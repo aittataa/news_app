@@ -13,7 +13,7 @@ class EmptyBox extends StatelessWidget {
       child: Text(
         label,
         style: GoogleFonts.poppins(
-          color: AppTheme.main_color_4.withOpacity(.5),
+          color: AppTheme.text_color_3,
           fontWeight: FontWeight.bold,
           letterSpacing: .5,
           fontSize: 15,

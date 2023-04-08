@@ -19,7 +19,7 @@ class ProgressBar extends StatelessWidget {
       inAsyncCall: anAsyncCall,
       opacity: .5,
       progressIndicator: const CircleSpinner(),
-      color: AppTheme.main_color_5,
+      color: AppTheme.main_color_1.withOpacity(.25),
       child: child,
     );
   }

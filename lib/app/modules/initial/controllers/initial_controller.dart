@@ -1,23 +1,14 @@
 import 'package:get/get.dart';
+import "package:news_app/app/data/data_sources/remote/remote_data_sources.dart";
+
+import "../../../config/responses/app_response.dart";
 
 class InitialController extends GetxController {
-  //TODO: Implement InitialController
+  final RemoteDataSource _remoteData = Get.put(RemoteDataSource());
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  /// TODO : Get News
+  Future<AppResponse> getNews(String query, int limit, int skip) async {
+    final AppResponse response = await _remoteData.getNews(query, limit, skip);
+    return response;
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
