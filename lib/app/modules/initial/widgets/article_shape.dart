@@ -98,9 +98,11 @@ class ArticleShape extends StatelessWidget {
                 }),
                 const SizedBox(height: 5),
                 Builder(builder: (_) {
+                  if (article.author == null) return const SizedBox();
                   final String author = article.author!;
                   return Text(
                     "by : $author",
+                    overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.poppins(
                       color: AppTheme.main_color_1,
                       fontWeight: FontWeight.w600,

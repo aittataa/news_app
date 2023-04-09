@@ -15,7 +15,7 @@ class SplashView extends GetView<SplashController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedSplashScreen(
-        splash: BouncePoint(size: 64),
+        splash: const BouncePoint(size: 64),
         nextScreen: const InitialView(),
         curve: AppConstant.curve,
         backgroundColor: AppTheme.back_color_2,

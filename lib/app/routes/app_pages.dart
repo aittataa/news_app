@@ -1,4 +1,6 @@
+import "package:flutter/cupertino.dart";
 import "package:get/get.dart";
+
 import "../modules/initial/bindings/initial_binding.dart";
 import "../modules/initial/views/initial_view.dart";
 import "../modules/splash/bindings/splash_binding.dart";
@@ -11,13 +13,13 @@ class AppPages {
 
   static const String initial = Routes.INITIAL;
 
-  static final List<GetPage> routes = [
-    GetPage(
+  static final List<GetPage<Widget>> routes = <GetPage<Widget>>[
+    GetPage<Widget>(
       name: _Paths.INITIAL,
       page: () => const InitialView(),
       binding: InitialBinding(),
     ),
-    GetPage(
+    GetPage<Widget>(
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
