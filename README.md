@@ -8,3 +8,4 @@ News APP.
 ![home_screen](https://user-images.githubusercontent.com/39503536/230771950-87b00fc3-42d0-46fe-bf55-290e7baf4020.png)
 ![article_details](https://user-images.githubusercontent.com/39503536/230771959-ac7f6e8d-2fa8-47ef-b60a-588db5cfddfa.png)
 ![article_content](https://user-images.githubusercontent.com/39503536/230771969-24550ee3-eda4-44fb-95da-e75e2cc9d45c.png)
+![share_app](https://user-images.githubusercontent.com/39503536/230771994-e31a056a-7676-43ee-ad02-63b0d651f321.png)
