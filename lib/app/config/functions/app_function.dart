@@ -6,7 +6,8 @@ import "../themes/app_theme.dart";
 class AppFunction {
   AppFunction._();
 
-  static String dateFormat(DateTime date) => DateFormat("MMM dd, yyyy - HH:mm").format(date.toLocal());
+  static String dateFormat(DateTime date) => DateFormat("MMM dd, yyyy").format(date.toLocal());
+  static String timeFormat(DateTime date) => DateFormat("HH:mm").format(date.toLocal());
 
   static get configureDependencies {
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp]);

@@ -56,37 +56,6 @@ class _ArticleDetailsState extends State<ArticleDetails> {
             ),
           ),
         ),
-        //title: Text("${article.title}"),
-        /*actions: <Widget>[
-          Container(
-            height: 50,
-            width: 50,
-            decoration: const BoxDecoration(
-              color: AppTheme.back_color_3,
-              borderRadius: BorderRadius.all(
-                Radius.circular(7.5),
-              ),
-            ),
-            child: IconButton(
-              onPressed: () async {
-                await FlutterShare.share(
-                  title: "${article.title}",
-                  linkUrl: "${article.url}",
-                );
-              },
-              iconSize: 25,
-              padding: EdgeInsets.zero,
-              color: AppTheme.icon_color_2,
-              splashColor: AppTheme.transparent_color,
-              highlightColor: AppTheme.transparent_color,
-              icon: const Icon(
-                Icons.share_rounded,
-                color: AppTheme.icon_color_2,
-                size: 25,
-              ),
-            ),
-          )
-        ],*/
       ),
       body: Stack(
         fit: StackFit.expand,

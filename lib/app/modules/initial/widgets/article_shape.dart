@@ -84,9 +84,11 @@ class ArticleShape extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 Builder(builder: (_) {
-                  final String date = AppFunction.dateFormat(article.publishedAt!);
+                  final DateTime publishedAt = article.publishedAt!;
+                  late String date = AppFunction.dateFormat(publishedAt);
+                  late String time = AppFunction.timeFormat(publishedAt);
                   return Text(
-                    date,
+                    "$date, $time",
                     style: GoogleFonts.poppins(
                       color: AppTheme.text_color_3,
                       fontWeight: FontWeight.w600,
