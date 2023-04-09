@@ -22,4 +22,6 @@ enum AppKeys {
   app_title,
   labelSearch,
   labelNoNews,
+  labelShareArticle,
+  labelOpenArticle,
 }

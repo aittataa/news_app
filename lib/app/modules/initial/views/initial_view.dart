@@ -1,17 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:get/get.dart";
+import "package:google_fonts/google_fonts.dart";
 import "package:infinite_scroll_pagination/infinite_scroll_pagination.dart";
 import "package:news_app/app/config/responses/app_response.dart";
 import "package:news_app/app/data/models/articles.dart";
+import "package:news_app/app/modules/initial/pages/article_details.dart";
+import "package:news_app/app/modules/initial/widgets/article_shape.dart";
 import "package:news_app/app/shared/scrolled_bar.dart";
 import "package:shimmer/shimmer.dart";
 
 import "../../../config/constants/app_constant.dart";
-import '../../../config/themes/app_theme.dart';
-import '../../../config/translations/app_translation.dart';
+import "../../../config/themes/app_theme.dart";
+import "../../../config/translations/app_translation.dart";
 import "../../../shared/circle_spinner.dart";
 import "../../../shared/empty_box.dart";
-import '../controllers/initial_controller.dart';
+import "../controllers/initial_controller.dart";
 
 class InitialView extends StatefulWidget {
   const InitialView({super.key});
@@ -34,7 +38,7 @@ class _InitialViewState extends State<InitialView> {
   }
 
   /// TODO : Get News
-  final int limit = 25;
+  final int limit = 10;
   late List<Article> _articles = const <Article>[];
   Future<void> getNews(int skip) async {
     try {
@@ -45,7 +49,7 @@ class _InitialViewState extends State<InitialView> {
       if (state) {
         pageController.appendLastPage(_articles);
       } else {
-        final int nextSkip = skip + _articles.length;
+        final int nextSkip = skip + 1;
         pageController.appendPage(_articles, nextSkip);
       }
     } catch (error) {
@@ -61,30 +65,11 @@ class _InitialViewState extends State<InitialView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Builder(builder: (_) {
-          if (searching) {
-            return SearchText(
-              controller: searchController,
-              onTap: () {
-                FocusScope.of(context).unfocus();
-                query = searchController.text;
-                pageController.refresh();
-                setState(() {});
-              },
-              onFieldSubmitted: (String value) {
-                FocusScope.of(context).unfocus();
-                query = value;
-                pageController.refresh();
-                setState(() {});
-              },
-            );
-          } else {
-            return Text(AppKeys.app_title.name.tr);
-          }
-        }),
-        actions: <Widget>[
-          IconButton(
+        leadingWidth: 30,
+        titleSpacing: 10,
+        leading: Visibility(
+          visible: searching,
+          child: IconButton(
             onPressed: () {
               query = "today";
               searchController.clear();
@@ -96,10 +81,52 @@ class _InitialViewState extends State<InitialView> {
             color: AppTheme.icon_color_2,
             splashColor: AppTheme.transparent_color,
             highlightColor: AppTheme.transparent_color,
-            icon: Icon(
-              searching ? Icons.clear : Icons.search,
-              color: AppTheme.icon_color_2,
+            icon: const Icon(
+              CupertinoIcons.back,
+              color: AppTheme.main_color_1,
               size: 25,
+            ),
+          ),
+        ),
+        title: Builder(builder: (_) {
+          if (searching) {
+            return SearchText(
+              controller: searchController,
+              onFieldSubmitted: (String value) {
+                FocusScope.of(context).unfocus();
+                if (searchController.text.isNotEmpty) {
+                  query = value;
+                } else {
+                  query = "today";
+                }
+                pageController.refresh();
+                setState(() {});
+              },
+            );
+          } else {
+            return Text(AppKeys.app_title.name.tr);
+          }
+        }),
+        actions: <Widget>[
+          Visibility(
+            visible: !searching,
+            child: IconButton(
+              onPressed: () {
+                query = "today";
+                searchController.clear();
+                searching = !searching;
+                setState(() {});
+              },
+              iconSize: 25,
+              padding: EdgeInsets.zero,
+              color: AppTheme.icon_color_2,
+              splashColor: AppTheme.transparent_color,
+              highlightColor: AppTheme.transparent_color,
+              icon: const Icon(
+                Icons.search,
+                color: AppTheme.main_color_1,
+                size: 25,
+              ),
             ),
           )
         ],
@@ -108,7 +135,7 @@ class _InitialViewState extends State<InitialView> {
         controller: scrollController,
         child: PagedListView<int, Article>(
           shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.all(10),
           physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
           scrollController: scrollController,
@@ -116,36 +143,11 @@ class _InitialViewState extends State<InitialView> {
           builderDelegate: PagedChildBuilderDelegate<Article>(
             animateTransitions: false,
             transitionDuration: Duration.zero,
-            itemBuilder: (_, Article product, int i) {
+            itemBuilder: (_, Article article, int i) {
+              if (article.urlToImage == null) return const SizedBox();
               return GestureDetector(
-                onTap: () {
-                  //Get.to(() => DetailsView(product: product));
-                },
-                child: Container(
-                  height: 250,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: AppTheme.back_color_2,
-                    borderRadius: const BorderRadius.all(Radius.circular(15)),
-                    border: Border.all(
-                      color: AppTheme.border_color.withOpacity(.5),
-                      width: .75,
-                    ),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: AppTheme.shadow_color.withOpacity(.1),
-                        spreadRadius: .1,
-                        blurRadius: 10,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Expanded(child: Container(color: Colors.red)),
-                      Expanded(child: Container(color: Colors.blue)),
-                    ],
-                  ),
-                ),
+                onTap: () => Get.to(() => ArticleDetails(article: article)),
+                child: ArticleShape(article: article),
               );
             },
             firstPageProgressIndicatorBuilder: (_) => const _LoadBar(),
@@ -153,10 +155,10 @@ class _InitialViewState extends State<InitialView> {
               padding: EdgeInsets.all(10),
               child: Center(child: CircleSpinner(size: 32)),
             ),
-            noItemsFoundIndicatorBuilder: (_) => EmptyBox(label: "${AppKeys.labelNoNews.name.tr} 1"),
             noMoreItemsIndicatorBuilder: (_) => const SizedBox(),
-            firstPageErrorIndicatorBuilder: (_) => EmptyBox(label: "${AppKeys.labelNoNews.name.tr} 2"),
-            newPageErrorIndicatorBuilder: (_) => EmptyBox(label: "${AppKeys.labelNoNews.name.tr} 3"),
+            noItemsFoundIndicatorBuilder: (_) => EmptyBox(label: AppKeys.labelNoNews.name.tr),
+            firstPageErrorIndicatorBuilder: (_) => EmptyBox(label: AppKeys.labelNoNews.name.tr),
+            newPageErrorIndicatorBuilder: (_) => EmptyBox(label: AppKeys.labelNoNews.name.tr),
           ),
         ),
       ),
@@ -166,22 +168,19 @@ class _InitialViewState extends State<InitialView> {
 
 class SearchText extends StatelessWidget {
   final TextEditingController? controller;
-  final void Function()? onTap;
   final void Function(String)? onFieldSubmitted;
   const SearchText({
     super.key,
     this.controller,
-    this.onTap,
     this.onFieldSubmitted,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onTap: onTap,
-      onFieldSubmitted: onFieldSubmitted,
       controller: controller,
-      style: const TextStyle(
+      onFieldSubmitted: onFieldSubmitted,
+      style: GoogleFonts.poppins(
         color: AppTheme.text_color_2,
         fontWeight: FontWeight.bold,
         letterSpacing: .5,
@@ -190,18 +189,23 @@ class SearchText extends StatelessWidget {
       autocorrect: true,
       scrollPadding: EdgeInsets.zero,
       cursorColor: AppTheme.text_color_2,
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.search,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-        border: InputBorder.none,
+        border: const OutlineInputBorder(
+          borderRadius: AppConstant.borderRadius,
+          borderSide: BorderSide.none,
+        ),
         hintText: AppKeys.labelSearch.name.tr,
-        hintStyle: TextStyle(
+        filled: true,
+        fillColor: AppTheme.back_color_3,
+        hintStyle: GoogleFonts.poppins(
           color: AppTheme.text_color_2.withOpacity(.75),
           fontWeight: FontWeight.bold,
           letterSpacing: .5,
         ),
-        errorStyle: const TextStyle(
+        errorStyle: GoogleFonts.poppins(
           color: AppTheme.red_color,
           fontWeight: FontWeight.bold,
           letterSpacing: .5,
@@ -225,7 +229,7 @@ class _LoadBar extends StatelessWidget {
         itemCount: 5,
         itemBuilder: (_, int i) {
           return Container(
-            height: 100,
+            height: 300,
             margin: const EdgeInsets.symmetric(vertical: 5),
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
@@ -233,7 +237,7 @@ class _LoadBar extends StatelessWidget {
               borderRadius: AppConstant.borderRadius,
               border: AppConstant.border,
             ),
-            child: Row(
+            child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,84 +246,42 @@ class _LoadBar extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppTheme.main_color_1,
-                      borderRadius: const BorderRadius.horizontal(left: Radius.circular(AppConstant.radius)),
+                      borderRadius: AppConstant.borderRadius,
                       border: AppConstant.border,
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 5),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Container(
-                          height: 35,
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: AppTheme.transparent_color,
-                            borderRadius: AppConstant.borderRadius,
-                            border: AppConstant.border,
-                          ),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppTheme.main_color_1,
-                              borderRadius: AppConstant.borderRadius,
-                              border: AppConstant.border,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  height: 35,
-                                  //width: 100,
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.transparent_color,
-                                    borderRadius: AppConstant.borderRadius,
-                                    border: AppConstant.border,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.main_color_1,
-                                      borderRadius: AppConstant.borderRadius,
-                                      border: AppConstant.border,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Expanded(
-                                child: Container(
-                                  height: 35,
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: AppTheme.transparent_color,
-                                    borderRadius: AppConstant.borderRadius,
-                                    border: AppConstant.border,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: AppTheme.main_color_1,
-                                      borderRadius: AppConstant.borderRadius,
-                                      border: AppConstant.border,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                const SizedBox(height: 5),
+                Container(
+                  height: 35,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: AppTheme.transparent_color,
+                    borderRadius: AppConstant.borderRadius,
+                    border: AppConstant.border,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppTheme.main_color_1,
+                      borderRadius: AppConstant.borderRadius,
+                      border: AppConstant.border,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Container(
+                  height: 40,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    color: AppTheme.transparent_color,
+                    borderRadius: AppConstant.borderRadius,
+                    border: AppConstant.border,
+                  ),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppTheme.main_color_1,
+                      borderRadius: AppConstant.borderRadius,
+                      border: AppConstant.border,
                     ),
                   ),
                 ),

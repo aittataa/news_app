@@ -1,6 +1,7 @@
 // ignore_for_file: constant_identifier_names
 
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 
 class AppTheme {
   AppTheme._();
@@ -18,7 +19,7 @@ class AppTheme {
   static const Color back_color_1 = Color(0xFF252525);
   static const Color back_color_2 = Color(0xFFFFFFFF);
   static const Color back_color_3 = Color(0xFFA0A0A0);
-  static const Color back_color_4 = Color(0xFFF0F0F0);
+  // static const Color back_color_4 = Color(0xFFF0F0F0);
 
   /// TODO : Texts
   static const Color text_color_1 = Color(0xFF252525);
@@ -35,12 +36,12 @@ class AppTheme {
       scaffoldBackgroundColor: back_color_2,
       primaryColor: transparent_color,
       splashColor: transparent_color,
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: main_color_1,
-        titleTextStyle: TextStyle(
-          color: AppTheme.text_color_2,
+        backgroundColor: back_color_2,
+        titleTextStyle: GoogleFonts.poppins(
+          color: AppTheme.text_color_1,
           fontWeight: FontWeight.bold,
           letterSpacing: .5,
           fontSize: 20,

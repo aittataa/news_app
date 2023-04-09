@@ -1,4 +1,4 @@
-import 'dart:convert';
+import "dart:convert";
 
 Articles articlesFromJson(String str) => Articles.fromJson(json.decode(str));
 

@@ -3,9 +3,8 @@ include: package:flutter_lints/flutter.yaml
 linter:
   rules:
     avoid_print: true
-    await_only_futures: true
+    prefer_single_quotes: false
     always_specify_types: true
     prefer_double_quotes: true
-    prefer_single_quotes: false
-    no_logic_in_create_state: false
-
+    await_only_futures: true
+    no_logic_in_create_state: true

@@ -1,9 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, constant_identifier_names
 
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import "package:flutter/material.dart";
+import "package:get/get.dart";
 
-import '../themes/app_theme.dart';
+import "../themes/app_theme.dart";
 
 class AppConstant {
   AppConstant._();

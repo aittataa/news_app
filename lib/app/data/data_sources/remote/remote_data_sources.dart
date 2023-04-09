@@ -1,12 +1,11 @@
 import "dart:convert";
-import "dart:developer";
 
 import "package:get/get.dart";
-import "package:news_app/app/data/data_sources/remote/rest_api.dart";
-import "package:news_app/app/data/models/articles.dart";
+import "package:http/http.dart" as http;
 
 import "../../../config/responses/app_response.dart";
-import 'package:http/http.dart' as http;
+import "../../models/articles.dart";
+import "rest_api.dart";
 
 class RemoteDataSource extends GetConnect {
   @override

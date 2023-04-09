@@ -1,17 +1,17 @@
-import 'package:get/get.dart';
-import '../modules/initial/bindings/initial_binding.dart';
-import '../modules/initial/views/initial_view.dart';
-import '../modules/splash/bindings/splash_binding.dart';
-import '../modules/splash/views/splash_view.dart';
+import "package:get/get.dart";
+import "../modules/initial/bindings/initial_binding.dart";
+import "../modules/initial/views/initial_view.dart";
+import "../modules/splash/bindings/splash_binding.dart";
+import "../modules/splash/views/splash_view.dart";
 
-part 'app_routes.dart';
+part "app_routes.dart";
 
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.INITIAL;
+  static const String initial = Routes.INITIAL;
 
-  static final routes = [
+  static final List<GetPage> routes = [
     GetPage(
       name: _Paths.INITIAL,
       page: () => const InitialView(),
